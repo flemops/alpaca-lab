@@ -5,9 +5,10 @@ beaucoup d'outils ignorent, et qui font paraître les stratégies bien
 meilleures qu'elles ne sont :
 
 1. **Pas de regard vers le futur.** Un signal calculé avec la clôture du jour J
-   est exécuté à l'ouverture de J+1. On ne peut pas acheter à un prix qu'on ne
-   connaissait pas encore.
-2. **Frais et écart de cours** déduits à chaque passage d'ordre.
+   ne produit une position qu'à partir de la période suivante : la position du
+   jour J+1 est celle décidée le jour J. Hypothèse simplificatrice : exécution
+   au cours de clôture de J, sans glissement de prix.
+2. **Frais** déduits à chaque changement de position (pas de modèle d'écart de cours).
 3. **Comparaison systématique** avec « acheter au début et ne rien faire ».
    C'est la seule référence qui compte : une stratégie qui gagne 8 % quand le
    marché en gagne 20 % a perdu de l'argent en réalité.

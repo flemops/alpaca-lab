@@ -1,5 +1,7 @@
 # Laboratoire Alpaca
 
+> **Statut : LAB personnel** (septembre 2026) — outil d'apprentissage sur les backtests, **pas une compétence ni un service financier**. Aucun conseil en investissement.
+
 Outil de simulation boursière. **Aucun argent réel, aucun ordre passé** — l'URL de
 l'API est verrouillée dans le code sur le bac à sable (`paper-api.alpaca.markets`),
 un ordre réel ne peut donc pas partir d'ici, même par erreur de configuration.
@@ -52,9 +54,9 @@ streamlit run app.py
 ## Trois précautions intégrées au calcul
 
 1. **Aucun regard vers le futur** : un signal calculé sur la clôture du jour J
-   n'est appliqué qu'à partir de J+1. Sans cette règle, tout backtest paraît
+   n'est appliqué qu'à la période suivante (exécution supposée au cours de clôture, sans glissement de prix). Sans cette règle, tout backtest paraît
    brillant — et ne vaut rien.
-2. **Frais déduits** à chaque passage d'ordre (0,05 % par défaut).
+2. **Frais déduits** à chaque changement de position (0,05 % par défaut) ; aucun modèle d'écart de cours.
 3. **Comparaison imposée** avec l'achat simple. C'est la seule référence
    honnête : une stratégie qui gagne 8 % pendant que le marché en gagne 20 %
    a détruit de la valeur.
@@ -66,3 +68,13 @@ toujours une combinaison qui aurait fonctionné — c'est du hasard habillé en
 méthode. Cet outil sert à comprendre des mécanismes, pas à décider d'un placement.
 
 *Ni cet outil ni son auteur ne fournissent de conseil en investissement.*
+
+## Vérification
+
+```bash
+pip install -r requirements.txt -r requirements-dev.txt
+python -m pytest -q      # 9 tests : causalité des signaux, frais, comparaison achat simple, GET paper uniquement
+ruff check .
+```
+
+La CI exécute ces contrôles, plus `pip-audit`.
