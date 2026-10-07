@@ -1,0 +1,24 @@
+name: CI automation
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+  schedule:
+    - cron: "17 4 * * 1"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  baseline:
+    uses: flemops/ci-templates/.github/workflows/automation-baseline.yml@ac23bf8c2b5439b638a62bc5cc2e6ca1b1b1053b
+    with:
+      ecosystem: python
+      python_version: "3.12"
+      install_cmd: pip install -r requirements.txt -r requirements-dev.txt && pip install pip-audit==2.10.1
+      lint_cmd: ruff check .
+      test_cmd: python -m pytest -q
+      audit_cmd: pip-audit --requirement requirements.txt --strict
